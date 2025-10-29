@@ -42,3 +42,21 @@ pub async fn load_dashboard() -> impl IntoResponse {
         body
     )
 }
+
+// 스칼라 타입 그대로 받을 것인지 struct 만들어서 받고 Some/None 매치문 태워서 분기처리 할 지 생각해보기
+pub async fn fetch_content_by_id(Path(content_number): Path<u32>) -> impl IntoResponse {
+    tracing::info!("content number: {:?}", content_number);
+    let mut header = HeaderMap::new();
+    // header.insert(header::CONTENT_TYPE, HeaderValue::from_static("application/json"));
+    header.insert(header::CONTENT_TYPE, HeaderValue::from_static("text/plain"));
+    match content_number {
+        1 => tracing::info!("콘텐츠 넘버는 1입니다"),
+        2 => tracing::info!("콘텐츠 넘버는 2입니다"),
+        _ => tracing::info!("콘텐츠 넘버는 1도 2도 아닙니다"),
+    };
+    (
+        StatusCode::OK,
+        header,
+        "우리는 이제 리퀘스트를 받을 수 있어요!".to_string()
+    )
+}
