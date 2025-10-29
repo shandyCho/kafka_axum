@@ -15,12 +15,6 @@ use crate::dashboard::dashboard_handler::load_dashboard;
 use crate::config::kafka_config::create_kafka_producer;
 use crate::config::structs::ApplicationState;
 
-// JSON 직렬화를 위한 트레이트를 자동으로 구현
-#[derive(Serialize)]
-struct Message {
-    message: String,
-}
-
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init(); // // 로깅 구독자 초기화 및 시작
@@ -36,18 +30,13 @@ async fn main() {
     // 라우터 정의
     let router = Router::new()
     .route("/", get(|| async {" Hello, World!"}))
-    .route("/api/v1/hello", get(hello))
     .route("/api/v1/dashboard", get(load_dashboard))
     .layer(service_layer)
     .with_state(application_state);
 
-
+    // .route("/api/v1/content/{content_id}", get(load_dashboard))
 
     // 서버 TCP 포트 리스닝을 통한 서버 구동
     let listner = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listner, router).await.unwrap();
-}
-
-async fn hello() -> Json<Message>{
-    Json(Message { message: String::from("Hello, Axum") })
 }

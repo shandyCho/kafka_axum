@@ -1,10 +1,8 @@
 // JSON 형태로 응답하기 위해서 axum의 Json 구조체를 사용한다.
 use axum::{
-    extract::Extension, http::{
-        header, HeaderMap, HeaderValue, StatusCode
-    }, response::{
-        IntoResponse
-    }, Json
+    Json, extract::{Extension, Path}, http::{
+        HeaderMap, HeaderValue, StatusCode, header
+    }, response::IntoResponse
 };
 
 // mod.rs에 정의한 요소들을 사용하고자 할 때는 use문을 쓰나 가장 먼저 crate 에서 시작해야한다.
