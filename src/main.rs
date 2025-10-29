@@ -18,6 +18,7 @@ use crate::config::structs::ApplicationState;
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init(); // // 로깅 구독자 초기화 및 시작
+    static SECRET : &str = "my_secret_key"; // JWT 서명에 사용할 비밀 키 정의
 
     let kafka_producer = create_kafka_producer();
     let application_state = ApplicationState::new(Arc::new(kafka_producer));
