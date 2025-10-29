@@ -24,7 +24,7 @@ async fn main() {
 
     let service_layer = ServiceBuilder::new()
     .layer(config::logging_config::config2::logging_setup2())
-    .layer(middleware::from_fn_with_state(application_state.clone(), config::kafka_config::send_user_view_content));
+    .layer(middleware::from_fn_with_state(application_state.clone(), config::kafka_config::produce_user_traffic_log));
     // 서버 IP 및 포트 정의
     let addr = "0.0.0.0:3000";
     // 라우터 정의

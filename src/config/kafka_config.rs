@@ -12,16 +12,18 @@ pub fn create_kafka_producer() -> FutureProducer {
         .expect("Producer creation error")
 }
 
-pub async fn send_user_view_content(
+pub async fn produce_user_traffic_log(
     State(state): State<ApplicationState>, 
     mut req: Request,
     next: Next
 ) -> Result<Response, impl IntoResponse> {
 
-    let body = req.body().clone();
+    let uri = req.uri();
+    tracing::info!("send_user_view_content middleware called with body: {:?}", uri);
     let content_classifier = "music";
     let user_id = 12345;
     println!("Kafka send_user_view_content called with classifier: {}, user_id: {}", &content_classifier, &user_id);
+
     let producer = state.get_kafka_producer();
     let topic = String::from("user_view_content");
     let user_id_str = user_id.to_string();
