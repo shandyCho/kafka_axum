@@ -25,7 +25,7 @@ struct Message {
 async fn main() {
     tracing_subscriber::fmt::init(); // // 로깅 구독자 초기화 및 시작
 
-    let kafka_producer = create_kafka_producer("localhost:9092");
+    let kafka_producer = create_kafka_producer();
     let application_state = ApplicationState::new(Arc::new(kafka_producer));
 
     let service_layer = ServiceBuilder::new()

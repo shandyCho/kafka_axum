@@ -5,9 +5,9 @@ use rdkafka::{ClientConfig, producer::{FutureProducer, FutureRecord}};
 
 use crate::config::structs::ApplicationState;
 
-pub fn create_kafka_producer(brokers: &str) -> FutureProducer {
+pub fn create_kafka_producer() -> FutureProducer {
     ClientConfig::new()
-        .set("bootstrap.servers", brokers)
+        .set("bootstrap.servers", "0.0.0.0:10000, 0.0.0.0:10001, 0.0.0.0:10002")
         .create()
         .expect("Producer creation error")
 }
